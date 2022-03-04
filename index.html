@@ -6,20 +6,20 @@
     <link rel="stylesheet" href="memory-game.css" />
   </head>
   <body>
-    <h1>Euphoria Memory Game!</h1>
+    <h1>Euphoria Memory Game</h1>
     <div id="dashboard">
       <form>
         <div>
           <input type="radio" id="noob" name="level" value="noob" checked />
-          <label for="noob">Noob</label>
+          <label for="noob" id="nooblabel">Noob (Best: )</label>
         </div>
         <div>
           <input type="radio" id="amateur" name="level" value="amateur" />
-          <label for="amateur">Amateur</label>
+          <label for="amateur" id="amateurlabel">Amateur (Best: )</label>
         </div>
         <div>
           <input type="radio" id="expert" name="level" value="expert" />
-          <label for="expert">Expert</label>
+          <label for="expert" id="expertlabel">Expert (Best: )</label>
         </div>
         <button type="submit">Start Game</button>
       </form>
@@ -28,10 +28,7 @@
         Score:
         <span id="guesses">0</span>
       </div>
-      <div>
-        Best (Lowest):
-        <span id="lowest"></span>
-      </div>
+      <div>Lower the better</div>
     </div>
 
     <div id="game"></div>

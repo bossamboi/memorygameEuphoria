@@ -3,18 +3,6 @@
 /** Memory game: find matching pairs of cards and flip both of them. */
 
 const FOUND_MATCH_WAIT_MSECS = 800;
-const COLORS = [
-  "red",
-  "blue",
-  "green",
-  "orange",
-  "purple",
-  "red",
-  "blue",
-  "green",
-  "orange",
-  "purple",
-];
 
 const PEOPLE = [
   "nate",
@@ -90,7 +78,9 @@ const form = document.querySelector("form");
 const radios = document.querySelectorAll("input[name=level]");
 const gameBoard = document.getElementById("game");
 const score = document.getElementById("guesses");
-const best = document.getElementById("lowest");
+const noobLabel = document.getElementById("nooblabel");
+const amateurLabel = document.getElementById("amateurlabel");
+const expertLabel = document.getElementById("expertlabel");
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   startGame();
@@ -99,14 +89,30 @@ form.addEventListener("submit", function (event) {
 let guesses;
 let currentScore;
 
-if (localStorage.lowestScore === undefined) {
-  localStorage.setItem("lowestScore", "");
+// if (localStorage.lowestScore === undefined) {
+//   localStorage.setItem("lowestScore", "");
+// } else {
+//   best.innerText = localStorage.lowestScore;
+// }
+
+if (localStorage.noobBest === undefined) {
+  localStorage.setItem("noobBest", "");
 } else {
-  best.innerText = localStorage.lowestScore;
+  noobLabel.innerText = "Noob (Best: " + localStorage.noobBest + ")";
+}
+if (localStorage.amateurBest === undefined) {
+  localStorage.setItem("amateurBest", "");
+} else {
+  amateurLabel.innerText = "Amateur (Best: " + localStorage.amateurBest + ")";
+}
+if (localStorage.expertBest === undefined) {
+  localStorage.setItem("expertBest", "");
+} else {
+  expertLabel.innerText = "Expert (Best: " + localStorage.expertBest + ")";
 }
 
+let selectedLevel;
 function startGame() {
-  let selectedLevel;
   for (const radio of radios) {
     if (radio.checked) {
       selectedLevel = radio.value;
@@ -186,8 +192,9 @@ function createCards(people) {
 
 function flipCard(card) {
   // ... you need to write this ...
-  // card.style.backgroundColor = `${card.getAttribute("class")}`;
-  card.innerHTML = `<img src="images/${card.getAttribute("class")}.jpeg">`;
+  // card.innerHTML = `<img src="images/${card.getAttribute("class")}.jpeg">`;
+  card.style.backgroundImage = `url("images/${card.getAttribute("class")}.jpeg")`;
+  card.style.backgroundSize = "contain";
   card.setAttribute("data-status", "guess");
   card.removeEventListener("click", handleCardClick);
 
@@ -198,7 +205,8 @@ function flipCard(card) {
 
 function unFlipCard(card) {
   // ... you need to write this ...
-  card.innerHTML = "";
+  card.style.backgroundImage = "";
+  card.style.backgroundSize = "";
   card.setAttribute("data-status", "unflipped");
   card.addEventListener("click", handleCardClick);
 }
@@ -265,11 +273,29 @@ function handleCardClick(evt) {
 }
 
 function updateLowestScore() {
-  if (localStorage.lowestScore === "") {
-    localStorage.lowestScore = guesses;
-    best.innerText = guesses;
-  } else if (guesses < parseInt(localStorage.lowestScore)) {
-    localStorage.lowestScore = guesses;
-    best.innerText = guesses;
+  if (selectedLevel === "noob") {
+    if (localStorage.noobBest === "") {
+      localStorage.noobBest = guesses;
+      noobLabel.innerText = "Noob (Best: " + localStorage.noobBest + ")";
+    } else if (guesses < parseInt(localStorage.noobBest)) {
+      localStorage.noobBest = guesses;
+      noobLabel.innerText = "Noob (Best: " + localStorage.noobBest + ")";
+    }
+  } else if (selectedLevel === "amateur") {
+    if (localStorage.amateurBest === "") {
+      localStorage.amateurBest = guesses;
+      amateurLabel.innerText = "Amateur (Best: " + localStorage.amateurBest + ")";
+    } else if (guesses < parseInt(localStorage.amateurBest)) {
+      localStorage.amateurBest = guesses;
+      amateurLabel.innerText = "Amateur (Best: " + localStorage.amateurBest + ")";
+    }
+  } else if (selectedLevel === "expert") {
+    if (localStorage.expertBest === "") {
+      localStorage.expertBest = guesses;
+      expertLabel.innerText = "Expert (Best: " + localStorage.expertBest + ")";
+    } else if (guesses < parseInt(localStorage.expertBest)) {
+      localStorage.expertBest = guesses;
+      expertLabel.innerText = "Expert (Best: " + localStorage.expertBest + ")";
+    }
   }
 }
