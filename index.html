@@ -8,19 +8,22 @@
   <body>
     <h1>Euphoria Memory Game!</h1>
     <div id="dashboard">
-      <div>
-        <input type="radio" id="noob" name="level" value="noob" />
-        <label for="noob">Noob</label>
-      </div>
-      <div>
-        <input type="radio" id="amateur" name="level" value="amateur" />
-        <label for="amateur">Amateur</label>
-      </div>
-      <div>
-        <input type="radio" id="expert" name="level" value="expert" />
-        <label for="expert">Expert</label>
-      </div>
-      <button>Start Game</button>
+      <form>
+        <div>
+          <input type="radio" id="noob" name="level" value="noob" checked />
+          <label for="noob">Noob</label>
+        </div>
+        <div>
+          <input type="radio" id="amateur" name="level" value="amateur" />
+          <label for="amateur">Amateur</label>
+        </div>
+        <div>
+          <input type="radio" id="expert" name="level" value="expert" />
+          <label for="expert">Expert</label>
+        </div>
+        <button type="submit">Start Game</button>
+      </form>
+
       <div>
         Score:
         <span id="guesses">0</span>

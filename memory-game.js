@@ -18,15 +18,45 @@ const COLORS = [
 
 const PEOPLE = [
   "nate",
-  "cassie",
-  "rue",
-  "jules",
-  "maddy",
   "nate",
   "cassie",
+  "cassie",
+  "rue",
   "rue",
   "jules",
+  "jules",
   "maddy",
+  "maddy",
+  "kat",
+  "kat",
+  "fez",
+  "fez",
+  "ashtray",
+  "ashtray",
+  "suze",
+  "suze",
+  "lexi",
+  "lexi",
+  "gia",
+  "gia",
+  "fike",
+  "fike",
+  "cal",
+  "cal",
+  "ethan",
+  "ethan",
+  "faye",
+  "faye",
+  "leslie",
+  "leslie",
+  "custer",
+  "custer",
+  "mouse",
+  "mouse",
+  "ali",
+  "ali",
+  "bobbi",
+  "bobbi",
 ];
 
 /**
@@ -56,10 +86,15 @@ const PEOPLE = [
  */
 
 const button = document.querySelector("button");
+const form = document.querySelector("form");
+const radios = document.querySelectorAll("input[name=level]");
 const gameBoard = document.getElementById("game");
 const score = document.getElementById("guesses");
 const best = document.getElementById("lowest");
-button.addEventListener("click", startGame);
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  startGame();
+});
 
 let guesses;
 let currentScore;
@@ -71,11 +106,27 @@ if (localStorage.lowestScore === undefined) {
 }
 
 function startGame() {
+  let selectedLevel;
+  for (const radio of radios) {
+    if (radio.checked) {
+      selectedLevel = radio.value;
+      break;
+    }
+  }
   button.innerText = "New Game";
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.firstChild);
   }
-  const people = shuffle(PEOPLE);
+  let people;
+  if (selectedLevel === "noob") {
+    people = shuffle(PEOPLE.slice(0, 10));
+  } else if (selectedLevel === "amateur") {
+    people = shuffle(PEOPLE.slice(0, 24));
+  } else if (selectedLevel === "expert") {
+    people = shuffle(PEOPLE);
+  } else {
+    console.log("ERROR IN LEVEL SELECTION");
+  }
   createCards(people);
   guesses = 0;
   score.innerText = guesses;
@@ -141,7 +192,7 @@ function flipCard(card) {
 
 function unFlipCard(card) {
   // ... you need to write this ...
-  card.style.backgroundColor = "";
+  card.innerHTML = "";
   card.setAttribute("data-status", "unflipped");
   card.addEventListener("click", handleCardClick);
 }
@@ -172,7 +223,7 @@ function handleCardClick(evt) {
       unflippedCard.removeEventListener("click", handleCardClick);
     }
 
-    if (guessCards[0].style.backgroundColor !== guessCards[1].style.backgroundColor) {
+    if (guessCards[0].getAttribute("class") !== guessCards[1].getAttribute("class")) {
       for (let guessCard of guessCards) {
         setTimeout(unFlipCard, FOUND_MATCH_WAIT_MSECS, guessCard);
         setTimeout(reactivateClick, FOUND_MATCH_WAIT_MSECS);
