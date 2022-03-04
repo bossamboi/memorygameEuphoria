@@ -16,6 +16,19 @@ const COLORS = [
   "purple",
 ];
 
+const PEOPLE = [
+  "nate",
+  "cassie",
+  "rue",
+  "jules",
+  "maddy",
+  "nate",
+  "cassie",
+  "rue",
+  "jules",
+  "maddy",
+];
+
 /**
  * nate
  * cassie
@@ -29,16 +42,16 @@ const COLORS = [
  * suze (cassie mom)
  * lexi (cassie sister)
  * gia (rue sister)
- * dom fike
+ * fike
  * --^ amateur (24 cards)
  * cal
  * ethan
  * faye
- * leslie bennet (rue's mom)
+ * leslie (rue's mom)
  * custer (ashtray's killer)
  * mouse
  * ali (rue's sponsor)
- * play lady
+ * bobbi
  * --^ expert (40 cards)
  */
 
@@ -62,8 +75,8 @@ function startGame() {
   while (gameBoard.firstChild) {
     gameBoard.removeChild(gameBoard.firstChild);
   }
-  const colors = shuffle(COLORS);
-  createCards(colors);
+  const people = shuffle(PEOPLE);
+  createCards(people);
   guesses = 0;
   score.innerText = guesses;
 }
@@ -93,13 +106,13 @@ function shuffle(items) {
  * - an click listener for each card to handleCardClick
  */
 
-function createCards(colors) {
+function createCards(people) {
   // const gameBoard = document.getElementById("game");
 
-  for (let color of colors) {
+  for (let person of people) {
     // missing code here ...
     let card = document.createElement("div");
-    card.setAttribute("class", color);
+    card.setAttribute("class", person);
     card.setAttribute("data-status", "unflipped");
     card.addEventListener("click", handleCardClick);
     gameBoard.append(card);
@@ -116,7 +129,8 @@ function createCards(colors) {
 
 function flipCard(card) {
   // ... you need to write this ...
-  card.style.backgroundColor = `${card.getAttribute("class")}`;
+  // card.style.backgroundColor = `${card.getAttribute("class")}`;
+  card.innerHTML = `<img src="images/${card.getAttribute("class")}.jpeg">`;
   card.setAttribute("data-status", "guess");
   card.removeEventListener("click", handleCardClick);
 
