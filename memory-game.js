@@ -38,7 +38,7 @@ const COLORS = [
  * custer (ashtray's killer)
  * mouse
  * ali (rue's sponsor)
- * chris mckay
+ * play lady
  * --^ expert (40 cards)
  */
 
