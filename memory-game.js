@@ -119,11 +119,17 @@ function startGame() {
   }
   let people;
   if (selectedLevel === "noob") {
-    people = shuffle(PEOPLE.slice(0, 10));
+    people = PEOPLE.slice(0, 10);
+    console.log(people);
+    people = shuffle(people);
   } else if (selectedLevel === "amateur") {
-    people = shuffle(PEOPLE.slice(0, 24));
+    people = PEOPLE.slice(0, 24);
+    console.log(people);
+    people = shuffle(people);
   } else if (selectedLevel === "expert") {
-    people = shuffle(PEOPLE);
+    people = PEOPLE.slice();
+    console.log(people);
+    people = shuffle(people);
   } else {
     console.log("ERROR IN LEVEL SELECTION");
   }
